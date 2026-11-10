@@ -17,6 +17,13 @@ enum Theme {
         static let backgroundPrimary = Color("BackgroundPrimary")
         static let destructive = Color("Destructive")
     }
+    
+    enum Spacing {
+        static let small: CGFloat = 8
+        static let medium: CGFloat = 16
+        static let large: CGFloat = 32
+    }
+    
 
     enum Fonts {
         static let display = Font.system(size: 42, weight: .black)
