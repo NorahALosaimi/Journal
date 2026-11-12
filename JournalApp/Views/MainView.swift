@@ -13,7 +13,9 @@ struct MainView: View {
     @State private var searchText = ""
 
     // Starts empty so the Empty State shows.
-    @State private var journals: [Journal] = []
+    @State private var journals:
+    [Journal] = []
+    @State private var showEditor = false
 
     // MARK: - Screen
     var body: some View {
@@ -32,7 +34,7 @@ struct MainView: View {
 
                     Spacer()
 
-                    HeaderButtons()
+                    HeaderButtons(onAdd: { showEditor = true })
                 }
 
                 // Middle part: changes depending on the data
@@ -46,8 +48,18 @@ struct MainView: View {
                 SearchBar(text: $searchText)
             }
             .padding(.horizontal, Theme.Spacing.medium)
+        }                                   // قوس ZStack
+        .sheet(isPresented: $showEditor) {  // الشيت هنا
+            EditJournalView(
+                onSave: { title, content in
+                    let newJournal = Journal(title: title, content: content, date: Date())
+                    journals.insert(newJournal, at: 0)
+                    showEditor = false
+                },
+                onClose: { showEditor = false }
+            )
         }
-    }
+    }                                       // قوس body
 
     // MARK: - Empty State
     private var emptyState: some View {
