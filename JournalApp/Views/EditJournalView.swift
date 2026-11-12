@@ -9,6 +9,7 @@ struct EditJournalView: View {
     // Data typed by the user
     @State private var title = ""
     @State private var content = ""
+    @State private var showDiscardAlert = false
 
     var body: some View {
         ZStack {
@@ -19,7 +20,14 @@ struct EditJournalView: View {
 
                 // Top bar: close (dark) on the left, save on the right
                 HStack {
-                    PrimaryButton(systemImage: "xmark", isDark: true, action: onClose)
+                    PrimaryButton(systemImage: "xmark", isDark: true) {
+                        if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+                           content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                            onClose()
+                        } else {
+                            showDiscardAlert = true
+                        }
+                    }
 
                     Spacer()
 
@@ -48,9 +56,28 @@ struct EditJournalView: View {
                 Spacer()
             }
             .padding(Theme.Spacing.medium)
+            if showDiscardAlert {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture { showDiscardAlert = false }
+
+                VStack {
+                    DiscardAlert(
+                        onDiscard: {
+                        showDiscardAlert = false
+                            onClose()
+                        },
+                        onKeepEditing:{showDiscardAlert = false }
+                    )
+                    Spacer()
+                }
+                .padding(.top, Theme.Spacing.small)
+            }
+               
+            }
         }
     }
-}
+
 
 #Preview {
     EditJournalView()

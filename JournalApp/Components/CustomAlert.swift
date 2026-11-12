@@ -90,7 +90,7 @@ struct DiscardAlert: View {
                         .foregroundColor(Theme.Colors.destructive)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, Theme.Spacing.small + 2)
-                        .background(Color.white.opacity(0.10))
+                    .background(Color.white.opacity(0.10))
                         .clipShape(Capsule())
                 }
 
