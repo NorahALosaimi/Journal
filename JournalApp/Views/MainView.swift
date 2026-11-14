@@ -91,7 +91,11 @@ struct MainView: View {
         ScrollView {
             VStack(spacing: Theme.Spacing.medium) {
                 ForEach(journals) { journal in
-                    JournalCard(journal: journal)
+                    JournalCard(journal: journal, onBookmark: {
+                        if let index = journals.firstIndex(where: { $0.id == journal.id }) {
+                            journals[index].isBookmarked.toggle()
+                        }
+                    })
                 }
             }
         }
