@@ -71,7 +71,7 @@ struct EditJournalView: View {
                     )
                     Spacer()
                 }
-                .padding(.top, Theme.Spacing.small)
+                .padding(.top, Theme.Spacing.large + Theme.Spacing.medium)
             }
                
             }

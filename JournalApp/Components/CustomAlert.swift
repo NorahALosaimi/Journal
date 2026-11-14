@@ -6,14 +6,20 @@
 //
 import SwiftUI
 
-// MARK: - Delete Alert (title + message + 2 buttons side by side)
+// ============================================================
+// SECTION 1: DELETE ALERT
+// Used when the user swipes a journal and taps the trash button.
+// Layout: title + message + 2 buttons SIDE BY SIDE.
+// ============================================================
 struct DeleteAlert: View {
 
-    // Actions: what happens when a button is tapped
+    // --- ACTIONS (what happens on tap; the screen decides) ---
     var onCancel: () -> Void = {}
     var onDelete: () -> Void = {}
 
     var body: some View {
+
+        // --- CONTENT (text + buttons) ---
         VStack(alignment: .leading, spacing: Theme.Spacing.small) {
 
             // Title
@@ -26,37 +32,42 @@ struct DeleteAlert: View {
                 .font(.subheadline)
                 .foregroundColor(Theme.Colors.textPrimary.opacity(0.85))
 
-            // Buttons row
+            // Buttons row (side by side)
             HStack(spacing: Theme.Spacing.small) {
 
-                // Cancel button (gray)
+                // Cancel button: gray background
                 Button(action: onCancel) {
                     Text("Cancel")
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(Theme.Colors.textPrimary)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, Theme.Spacing.small)
-                        .background(Color.white.opacity(0.15))
+                        .padding(.vertical, Theme.Spacing.small)          // button height
+                        .background(Color.white.opacity(0.15))            // button color
                         .clipShape(Capsule())
                 }
 
-                // Delete button (red)
+                // Delete button: red background
                 Button(action: onDelete) {
                     Text("Delete")
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(Theme.Colors.textPrimary)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, Theme.Spacing.small)
-                        .background(Theme.Colors.destructive)
+                        .padding(.vertical, Theme.Spacing.small)          // button height
+                        .background(Theme.Colors.destructive)             // red
                         .clipShape(Capsule())
                 }
             }
             .padding(.top, Theme.Spacing.small)
         }
-        // Alert box style
+
+        // --- SIZE (inner spacing + width relative to the screen) ---
         .padding(Theme.Spacing.medium)
-        .containerRelativeFrame(.horizontal) { width, _ in width * 0.75 }
+        .containerRelativeFrame(.horizontal) { width, _ in width * 0.75 } // 75% of screen width
+
+        // --- BACKGROUND (solid dark) ---
         .background(Color(white: 0.09))
+
+        // --- CORNERS + BORDER ---
         .clipShape(RoundedRectangle(cornerRadius: 34, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 34, style: .continuous)
@@ -65,66 +76,80 @@ struct DeleteAlert: View {
     }
 }
 
-// MARK: - Discard Alert (message + 2 buttons stacked, translucent)
+// ============================================================
+// SECTION 2: DISCARD ALERT
+// Used when the user taps ✕ while editing with unsaved text.
+// Layout: message only + 2 buttons STACKED vertically. Glass look.
+// ============================================================
 struct DiscardAlert: View {
 
-    // Actions
+    // --- ACTIONS ---
     var onDiscard: () -> Void = {}
     var onKeepEditing: () -> Void = {}
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Spacing.medium) {
 
-            // Message (no title in this design)
+        // --- CONTENT (text + buttons) ---
+        VStack(alignment: .leading, spacing: Theme.Spacing.small) { 
+
+            // Message (this design has no title)
             Text("Are you sure you want to discard changes on this journal?")
                 .font(.subheadline)
                 .foregroundColor(Theme.Colors.textPrimary.opacity(0.75))
 
-            // Buttons stacked vertically
+            // Buttons (stacked vertically)
             VStack(spacing: Theme.Spacing.small) {
 
-                // Discard button (red text)
+                // Discard button: red text
                 Button(action: onDiscard) {
                     Text("Discard Changes")
                         .font(.subheadline.weight(.medium))
                         .foregroundColor(Theme.Colors.destructive)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, Theme.Spacing.small + 2)
-                    .background(Color.white.opacity(0.10))
+                        .padding(.vertical, Theme.Spacing.small + 2)      // button height
+                        .background(Color.white.opacity(0.12))            // button color
                         .clipShape(Capsule())
                 }
 
-                // Keep Editing button (white text)
+                // Keep Editing button: white text
                 Button(action: onKeepEditing) {
                     Text("Keep Editing")
                         .font(.subheadline.weight(.semibold))
                         .foregroundColor(Theme.Colors.textPrimary)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, Theme.Spacing.small + 2)
-                        .background(Color.white.opacity(0.10))
+                        .padding(.vertical, Theme.Spacing.small)      // button height
+                        .background(Color.white.opacity(0.12))            // button color
                         .clipShape(Capsule())
                 }
             }
         }
-        // Alert box style
+
+        // --- SIZE (width first, then inner spacing) ---
         .padding(Theme.Spacing.medium)
-        .containerRelativeFrame(.horizontal) { width, _ in width * 0.75 }
-        .background(Color(white: 0.12).opacity(0.85))
+        .frame(maxWidth: .infinity)
+        .containerRelativeFrame(.horizontal) { width, _ in width * 0.76 }
+
+        // --- BACKGROUND (dark tint over blur) ---
+        .background(Color.black.opacity(0.85))
         .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 34, style: .continuous))
+
+        // --- CORNERS + BORDER ---
+        .clipShape(RoundedRectangle(cornerRadius: 40, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 34, style: .continuous)
+            RoundedRectangle(cornerRadius: 40, style: .continuous)
                 .stroke(Color.white.opacity(0.15), lineWidth: 1)
         )
     }
 }
 
-// MARK: - Preview (not part of the real app)
+// ============================================================
+// SECTION 3: PREVIEW (only for Xcode canvas, not in the real app)
+// ============================================================
 #Preview {
     ZStack {
         Theme.Colors.surfaceCard.ignoresSafeArea()
 
-        // Fake text behind the alerts so you can see the transparency
+        // Fake text behind the alerts so the glass effect is visible
         Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.")
             .foregroundColor(Theme.Colors.textPrimary)
             .padding()
