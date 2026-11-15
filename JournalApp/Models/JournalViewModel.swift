@@ -1,52 +1,50 @@
-//
-//  ViewModels.swift
-//  JournalApp
-//
-//  Created by Norah Alosaimi on 05/06/1448 AH.
-//
-
 import SwiftUI
 
-// ============================================================
-// THE CLASS: the "storage box" that holds the app's data.
-// @Observable = when any value inside changes, the screen
-// updates itself automatically.
-// ============================================================
 @Observable
 class JournalViewModel {
 
-    // ------------------------------------------------------------
-    // All the journals.
-    // [Journal] = a list of journals
-    // []        = empty at the start (so the "Begin Your Journal"
-    //             screen shows)
-    // ------------------------------------------------------------
+    // Data
     var journals: [Journal] = []
-
-    // ------------------------------------------------------------
-    // The text the user types in the search bar.
-    // "" = empty at the start
-    // ------------------------------------------------------------
     var searchText = ""
-
-    // ------------------------------------------------------------
-    // The current sort type.
-    // .entryDate = by date (newest first)
-    // The other option: .bookmark = bookmarked journals on top
-    // ------------------------------------------------------------
     var sortOption: SortOption = .entryDate
-
-    // ------------------------------------------------------------
-    // The journal the user tapped 🗑 on, waiting for confirmation.
-    // The ? means "can be empty"
-    // nil = no journal selected, so the delete alert is hidden
-    // ------------------------------------------------------------
     var journalToDelete: Journal? = nil
-
-    // ------------------------------------------------------------
-    // The ID of the card that is currently swiped open
-    // (the one showing the 🗑 button).
-    // nil = no card is swiped
-    // ------------------------------------------------------------
     var swipedID: UUID? = nil
+
+    // Search + sort result
+    var filteredJournals: [Journal] {
+        let result = searchText.isEmpty ? journals : journals.filter {
+            $0.title.localizedCaseInsensitiveContains(searchText) ||
+            $0.content.localizedCaseInsensitiveContains(searchText)
+        }
+        switch sortOption {
+        case .bookmark:  return result.sorted { $0.isBookmarked && !$1.isBookmarked }
+        case .entryDate: return result.sorted { $0.date > $1.date }
+        }
+    }
+
+    // Actions
+    func add(title: String, content: String) {
+        journals.insert(Journal(title: title, content: content, date: Date()), at: 0)
+    }
+
+    func toggleBookmark(_ journal: Journal) {
+        if let i = journals.firstIndex(where: { $0.id == journal.id }) {
+            journals[i].isBookmarked.toggle()
+        }
+    }
+
+    func askDelete(_ journal: Journal) {
+        swipedID = nil
+        journalToDelete = journal
+    }
+
+    func confirmDelete() {
+        if let j = journalToDelete { journals.removeAll { $0.id == j.id } }
+        cancelDelete()
+    }
+
+    func cancelDelete() {
+        journalToDelete = nil
+        swipedID = nil
+    }
 }
