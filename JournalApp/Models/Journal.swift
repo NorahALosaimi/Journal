@@ -14,3 +14,7 @@ struct Journal: Identifiable {
     var date: Date
     var isBookmarked: Bool = false
 }
+enum SortOption {
+    case bookmark
+    case entryDate
+}
