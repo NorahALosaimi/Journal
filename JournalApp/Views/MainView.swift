@@ -82,7 +82,15 @@ struct MainView: View {
                 onClose: { showEditor = false }
             )
         }
-    }                                       // قوس body
+    }
+    // قوس body
+    private var filteredJournals: [Journal] {
+           if searchText.isEmpty { return journals }
+           return journals.filter {
+               $0.title.localizedCaseInsensitiveContains(searchText) ||
+               $0.content.localizedCaseInsensitiveContains(searchText)
+           }
+       }
     
     // MARK: - Empty State
     private var emptyState: some View {
@@ -113,7 +121,7 @@ struct MainView: View {
     private var journalList: some View {
         ScrollView {
             VStack(spacing: Theme.Spacing.medium) {
-                ForEach(journals) { journal in
+                ForEach(filteredJournals) { journal in
                     let buttonWidth: CGFloat = 48 + Theme.Spacing.small
                     let isOpen = swipedID == journal.id || journalToDelete?.id == journal.id
                     
@@ -161,3 +169,4 @@ struct MainView: View {
 #Preview {
     MainView()
 }
+
