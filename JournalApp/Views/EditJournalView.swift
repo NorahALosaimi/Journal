@@ -10,6 +10,9 @@ struct EditJournalView: View {
     @State private var title = ""
     @State private var content = ""
     @State private var showDiscardAlert = false
+    private var isTitleValid: Bool {
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
 
     var body: some View {
         ZStack {
@@ -32,8 +35,12 @@ struct EditJournalView: View {
                     Spacer()
 
                     PrimaryButton(systemImage: "checkmark") {
-                        onSave(title, content)
+                        if isTitleValid {
+                            onSave(title, content)
+                        }
                     }
+                    .opacity(isTitleValid ? 1 : 0.4)
+                    .disabled(!isTitleValid)
                 }
 
                 // Title field
