@@ -15,7 +15,7 @@ struct MainView: View {
                         .font(Theme.Fonts.headingL)
                         .foregroundColor(Theme.Colors.textPrimary)
                     Spacer()
-                    HeaderButtons(onAdd: { showEditor = true })
+                    HeaderButtons(sortOption: $viewModel.sortOption, onAdd: { showEditor = true })
                 }
 
                 if viewModel.journals.isEmpty {
@@ -46,6 +46,7 @@ struct MainView: View {
                 )
             }
         }
+        .preferredColorScheme(.dark)
         .sheet(isPresented: $showEditor) {
             EditJournalView(
                 onSave: { title, content in
