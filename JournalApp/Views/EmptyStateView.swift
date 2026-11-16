@@ -11,22 +11,22 @@ struct EmptyStateView: View {
         VStack(spacing: Theme.Spacing.medium) {
             Spacer()
 
-            Image("BookIllustration")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200)
+        Image("BookIllustration")
+         .resizable()
+        .scaledToFit()
+        .frame(width: 200)
 
-            Text("Begin Your Journal")
-                .font(Theme.Fonts.headingM)
-                .foregroundColor(Theme.Colors.textAccent)
+    Text("Begin Your Journal")
+    .font(Theme.Fonts.headingM)
+    .foregroundColor(Theme.Colors.textAccent)
 
-            Text("Craft your personal diary, tap the plus icon to begin")
-                .font(Theme.Fonts.bodyM)
-                .foregroundColor(Theme.Colors.textPrimary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, Theme.Spacing.large)
+ Text("Craft your personal diary, tap the plus icon to begin")
+        .font(Theme.Fonts.bodyM)
+    .foregroundColor(Theme.Colors.textPrimary)
+        .multilineTextAlignment(.center)
+       .padding(.horizontal, Theme.Spacing.large)
 
-            Spacer()
+        Spacer()
         }
         .frame(maxWidth: .infinity)
     }

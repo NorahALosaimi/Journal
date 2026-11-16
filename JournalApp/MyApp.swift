@@ -7,10 +7,10 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                if showSplash {
-                    SplashView()
-                } else {
-                    MainView()
+         if showSplash {
+            SplashView()
+        } else {
+            MainView()
                 }
             }
             .preferredColorScheme(.dark)

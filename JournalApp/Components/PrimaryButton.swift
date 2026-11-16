@@ -12,13 +12,13 @@ struct PrimaryButton: View {
     var action: () -> Void = {}
     
     var body: some View {
-        Button(action: action) {
-            Image(systemName: systemImage)
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundColor(isDark ? Theme.Colors.textPrimary : Theme.Colors.backgroundPrimary)
-                .frame(width: 40, height: 40)
-                .background(isDark ? Theme.Colors.backgroundPrimary : Theme.Colors.primaryAccent)
-                .clipShape(Circle())
+    Button(action: action) {
+    Image(systemName: systemImage)
+.font(.system(size: 18, weight: .semibold))
+.foregroundColor(isDark ? Theme.Colors.textPrimary : Theme.Colors.backgroundPrimary)
+    .frame(width: 40, height: 40)
+.background(isDark ? Theme.Colors.backgroundPrimary : Theme.Colors.primaryAccent)
+    .clipShape(Circle())
         }
     }
 }

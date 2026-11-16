@@ -14,31 +14,32 @@ struct JournalCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.small) {
             HStack {
-                Text(journal.title)
-                    .font(Theme.Fonts.titleCard)
-                    .foregroundColor(Theme.Colors.textAccent)
+        Text(journal.title)
+    .font(Theme.Fonts.titleCard)
+    .foregroundColor(Theme.Colors.textAccent)
                 
                 Spacer()
                 
-                Button(action: onBookmark) {
-                    Image(systemName: journal.isBookmarked ? "bookmark.fill" : "bookmark")
-                        .foregroundColor(Theme.Colors.primaryAccent)
+    Button(action: onBookmark) {
+    Image(systemName: journal.isBookmarked ? "bookmark.fill" : "bookmark")
+    .foregroundColor(Theme.Colors.primaryAccent)
                 }
             }
             
-            Text(journal.date.formatted(date: .numeric, time: .omitted))
-                .font(Theme.Fonts.captionS)
-                .foregroundColor(Theme.Colors.textSecondary)
+Text(journal.date.formatted(date: .numeric, time: .omitted))
+    .font(Theme.Fonts.captionS)
+    .foregroundColor(Theme.Colors.textSecondary)
             
-            Text(journal.content)
-                .font(Theme.Fonts.captionM)
-                .foregroundColor(Theme.Colors.textPrimary)
-                .lineLimit(3)
+ Text(journal.content)
+    .font(Theme.Fonts.captionM)
+    .foregroundColor(Theme.Colors.textPrimary)
+        .lineLimit(3)
+        
         }
-        .padding(Theme.Spacing.medium)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Theme.Colors.surfaceCard)
-        .cornerRadius(12)
+    .padding(Theme.Spacing.medium)
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .background(Theme.Colors.surfaceCard)
+    .cornerRadius(12)
     }
 }
 

@@ -14,18 +14,18 @@ struct HeaderButtons: View {
         HStack(spacing: Theme.Spacing.medium) {
             
             // Filter menu: opens two options
-            Menu {
-                Picker("Sort", selection: $sortOption) {
-                    Text("Sort by Bookmark").tag(SortOption.bookmark)
-                    Text("Sort by Entry Date").tag(SortOption.entryDate)
+    Menu {
+ Picker("Sort", selection: $sortOption) {
+ Text("Sort by Bookmark").tag(SortOption.bookmark)
+    Text("Sort by Entry Date").tag(SortOption.entryDate)
                 }
             } label: {
-                Image(systemName: "line.3.horizontal.decrease")
+    Image(systemName: "line.3.horizontal.decrease")
             }
             
             // Add button
-            Button(action: onAdd) {
-                Image(systemName: "plus")
+    Button(action: onAdd) {
+        Image(systemName: "plus")
             }
         }
         .font(.system(size: 20))

@@ -3,14 +3,14 @@ import SwiftUI
 @Observable
 class JournalViewModel {
 
-    // Data
+    // MARK: - Data
     var journals: [Journal] = []
     var searchText = ""
     var sortOption: SortOption = .entryDate
     var journalToDelete: Journal? = nil
     var swipedID: UUID? = nil
 
-    // Search + sort result
+    // MARK: - Search + sort
     var filteredJournals: [Journal] {
         let result = searchText.isEmpty ? journals : journals.filter {
             $0.title.localizedCaseInsensitiveContains(searchText) ||
@@ -22,9 +22,16 @@ class JournalViewModel {
         }
     }
 
-    // Actions
+    // MARK: - Actions
     func add(title: String, content: String) {
         journals.insert(Journal(title: title, content: content, date: Date()), at: 0)
+    }
+
+    func update(_ journal: Journal, title: String, content: String) {
+        if let i = journals.firstIndex(where: { $0.id == journal.id }) {
+            journals[i].title = title
+            journals[i].content = content
+        }
     }
 
     func toggleBookmark(_ journal: Journal) {
