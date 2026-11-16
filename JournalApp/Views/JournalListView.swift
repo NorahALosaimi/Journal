@@ -12,39 +12,39 @@ import SwiftUI
 // It does NOT store data. It receives everything from outside.
 // ============================================================
 struct JournalListView: View {
-
+    
     // ------------------------------------------------------------
     // DATA coming from MainView
     // ------------------------------------------------------------
     let journals: [Journal]            // the journals to show
     let swipedID: UUID?                // which card is swiped open
     let journalToDelete: Journal?      // which card is waiting for delete
-
+    
     // ------------------------------------------------------------
     // ACTIONS (what to do when something happens; MainView decides)
     // ------------------------------------------------------------
     var onBookmark: (Journal) -> Void = { _ in }
     var onSwipe: (UUID?) -> Void = { _ in }
     var onDeleteTap: (Journal) -> Void = { _ in }
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: Theme.Spacing.medium) {
                 ForEach(journals) { journal in
-
+                    
                     // Width of the red 🗑 button (+ gap)
                     let buttonWidth: CGFloat = 48 + Theme.Spacing.small
-
+                    
                     // Is this card slid open?
                     let isOpen = swipedID == journal.id || journalToDelete?.id == journal.id
-
+                    
                     HStack(spacing: Theme.Spacing.small) {
-
+                        
                         // The card + its bookmark action
                         JournalCard(journal: journal, onBookmark: {
                             onBookmark(journal)
                         })
-
+                        
                         // The red delete button
                         Button {
                             onDeleteTap(journal)

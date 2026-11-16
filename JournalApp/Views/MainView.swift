@@ -3,12 +3,12 @@ import SwiftUI
 struct MainView: View {
     @State private var viewModel = JournalViewModel()
     @State private var showEditor = false
-   
-
+    
+    
     var body: some View {
         ZStack {
             Theme.Colors.backgroundPrimary.ignoresSafeArea()
-
+            
             VStack(spacing: Theme.Spacing.medium) {
                 HStack {
                     Text("Journal")
@@ -17,7 +17,7 @@ struct MainView: View {
                     Spacer()
                     HeaderButtons(sortOption: $viewModel.sortOption, onAdd: { showEditor = true })
                 }
-
+                
                 if viewModel.journals.isEmpty {
                     EmptyStateView()
                 } else {
@@ -30,16 +30,16 @@ struct MainView: View {
                         onDeleteTap: { viewModel.askDelete($0) }
                     )
                 }
-
+                
                 SearchBar(text: $viewModel.searchText)
             }
             .padding(.horizontal, Theme.Spacing.medium)
-
+            
             if viewModel.journalToDelete != nil {
                 Color.black.opacity(0.6)
                     .ignoresSafeArea()
                     .onTapGesture { viewModel.cancelDelete() }
-
+                
                 DeleteAlert(
                     onCancel: { viewModel.cancelDelete() },
                     onDelete: { viewModel.confirmDelete() }

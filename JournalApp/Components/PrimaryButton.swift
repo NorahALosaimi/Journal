@@ -10,7 +10,7 @@ struct PrimaryButton: View {
     var systemImage: String = "checkmark"
     var isDark: Bool = false
     var action: () -> Void = {}
-
+    
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)

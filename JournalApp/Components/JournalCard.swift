@@ -10,26 +10,26 @@ import SwiftUI
 struct JournalCard: View {
     let journal: Journal
     var onBookmark: () -> Void = {}
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.small) {
             HStack {
                 Text(journal.title)
                     .font(Theme.Fonts.titleCard)
                     .foregroundColor(Theme.Colors.textAccent)
-
+                
                 Spacer()
-
+                
                 Button(action: onBookmark) {
                     Image(systemName: journal.isBookmarked ? "bookmark.fill" : "bookmark")
                         .foregroundColor(Theme.Colors.primaryAccent)
                 }
             }
-
+            
             Text(journal.date.formatted(date: .numeric, time: .omitted))
                 .font(Theme.Fonts.captionS)
                 .foregroundColor(Theme.Colors.textSecondary)
-
+            
             Text(journal.content)
                 .font(Theme.Fonts.captionM)
                 .foregroundColor(Theme.Colors.textPrimary)

@@ -9,10 +9,10 @@ import SwiftUI
 struct HeaderButtons: View {
     @Binding var sortOption: SortOption
     var onAdd: () -> Void = {}
-
+    
     var body: some View {
         HStack(spacing: Theme.Spacing.medium) {
-
+            
             // Filter menu: opens two options
             Menu {
                 Picker("Sort", selection: $sortOption) {
@@ -22,7 +22,7 @@ struct HeaderButtons: View {
             } label: {
                 Image(systemName: "line.3.horizontal.decrease")
             }
-
+            
             // Add button
             Button(action: onAdd) {
                 Image(systemName: "plus")
