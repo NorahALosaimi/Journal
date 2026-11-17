@@ -8,14 +8,13 @@ struct MyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                if showSplash {
-                    SplashView()
-                } else {
-                    MainView()
+        ZStack {
+        if showSplash {
+            SplashView()
+            } else {
+            MainView()
                 }
             }
-            .preferredColorScheme(.dark)
             .task {
                 // Wait 2 seconds, then switch to MainView
                 try? await Task.sleep(for: .seconds(2))

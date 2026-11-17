@@ -60,7 +60,6 @@ if viewModel.journalToDelete != nil {
                 )
             }
         }
-        .preferredColorScheme(.dark)
         .sheet(isPresented: $showEditor) {
             EditJournalView(
     onSave: { title, content in

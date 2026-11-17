@@ -42,7 +42,7 @@ struct DeleteAlert: View {
     .frame(maxWidth: .infinity)
  .padding(.vertical, Theme.Spacing.small)
  // button height
-.background(Color.white.opacity(0.15))
+.background(Theme.Colors.textPrimary.opacity(0.15))
                     
     // button color
     .clipShape(Capsule())
@@ -67,14 +67,14 @@ struct DeleteAlert: View {
 .containerRelativeFrame(.horizontal) { width, _ in width * 0.75 }
  // 75% of screen width
         
-// --- BACKGROUND (solid dark) ---
-    .background(Color(white: 0.09))
+// --- BACKGROUND (adapts to light/dark) ---
+.background(Theme.Colors.surfaceCard)
         
 // --- CORNERS + BORDER ---
 .clipShape(RoundedRectangle(cornerRadius: 34, style: .continuous))
     .overlay(
     RoundedRectangle(cornerRadius: 34, style: .continuous)
-    .stroke(Color.white.opacity(0.15), lineWidth: 1)
+    .stroke(Theme.Colors.textPrimary.opacity(0.15), lineWidth: 1)
         )
     }
 }
@@ -111,7 +111,7 @@ VStack(spacing: Theme.Spacing.small) {
 .frame(maxWidth: .infinity)
 .padding(.vertical, Theme.Spacing.small + 2)
 // button height
-.background(Color.white.opacity(0.12))
+.background(Theme.Colors.textPrimary.opacity(0.12))
                     
     //button color
     .clipShape(Capsule())
@@ -125,7 +125,7 @@ VStack(spacing: Theme.Spacing.small) {
  .frame(maxWidth: .infinity)
  .padding(.vertical, Theme.Spacing.small)
         // button height
-.background(Color.white.opacity(0.12))
+.background(Theme.Colors.textPrimary.opacity(0.12))
                     
         // button color
         .clipShape(Capsule())
@@ -138,15 +138,17 @@ VStack(spacing: Theme.Spacing.small) {
     .frame(maxWidth: .infinity)
 .containerRelativeFrame(.horizontal) { width, _ in width * 0.76 }
         
-// --- BACKGROUND (dark tint over blur) ---
-.background(Color.black.opacity(0.85))
+// --- BACKGROUND (tint over blur) ---.
+        
+// --- BACKGROUND (tint over blur) ---
+        .background(Theme.Colors.backgroundPrimary.opacity(0.85))
     .background(.ultraThinMaterial)
         
     // --- CORNERS + BORDER ---
   .clipShape(RoundedRectangle(cornerRadius: 40, style: .continuous))
         .overlay(
     RoundedRectangle(cornerRadius: 40, style: .continuous)
-    .stroke(Color.white.opacity(0.15), lineWidth: 1)
+    .stroke(Theme.Colors.textPrimary.opacity(0.15), lineWidth: 1)
         )
     }
 }
