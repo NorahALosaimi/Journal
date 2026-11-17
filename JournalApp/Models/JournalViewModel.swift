@@ -1,43 +1,45 @@
 import SwiftUI
+import SwiftData
 
 @Observable
 class JournalViewModel {
 
-    // MARK: - Data
-    var journals: [Journal] = []
+    // MARK: - UI State
+    // Note: journals are no longer stored here.
+    // They come from SwiftData using @Query in MainView.
     var searchText = ""
     var sortOption: SortOption = .entryDate
     var journalToDelete: Journal? = nil
     var swipedID: UUID? = nil
 
     // MARK: - Search + sort
-    var filteredJournals: [Journal] {
-        let result = searchText.isEmpty ? journals : journals.filter {
-            $0.title.localizedCaseInsensitiveContains(searchText) ||
-            $0.content.localizedCaseInsensitiveContains(searchText)
+    // Takes the saved journals and returns them filtered + sorted
+    func filteredJournals(_ journals: [Journal]) -> [Journal] {
+    let result = searchText.isEmpty ? journals : journals.filter {
+        $0.title.localizedCaseInsensitiveContains(searchText) ||
+        $0.content.localizedCaseInsensitiveContains(searchText)
         }
         switch sortOption {
-        case .bookmark:  return result.sorted { $0.isBookmarked && !$1.isBookmarked }
-        case .entryDate: return result.sorted { $0.date > $1.date }
+    case .bookmark:  return result.sorted { $0.isBookmarked && !$1.isBookmarked }
+    case .entryDate: return result.sorted { $0.date > $1.date }
         }
     }
 
     // MARK: - Actions
-    func add(title: String, content: String) {
-        journals.insert(Journal(title: title, content: content, date: Date()), at: 0)
+    // Saves a new journal to the database
+    func add(title: String, content: String, in context: ModelContext) {
+    let journal = Journal(title: title, content: content, date: Date())
+        context.insert(journal)
     }
 
+    // Journal is a class now, so changing it saves automatically
     func update(_ journal: Journal, title: String, content: String) {
-        if let i = journals.firstIndex(where: { $0.id == journal.id }) {
-            journals[i].title = title
-            journals[i].content = content
-        }
+        journal.title = title
+        journal.content = content
     }
 
     func toggleBookmark(_ journal: Journal) {
-        if let i = journals.firstIndex(where: { $0.id == journal.id }) {
-            journals[i].isBookmarked.toggle()
-        }
+        journal.isBookmarked.toggle()
     }
 
     func askDelete(_ journal: Journal) {
@@ -45,8 +47,11 @@ class JournalViewModel {
         journalToDelete = journal
     }
 
-    func confirmDelete() {
-        if let j = journalToDelete { journals.removeAll { $0.id == j.id } }
+    // Removes the journal from the database
+    func confirmDelete(in context: ModelContext) {
+        if let journal = journalToDelete {
+            context.delete(journal)
+        }
         cancelDelete()
     }
 

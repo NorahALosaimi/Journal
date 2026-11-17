@@ -1,9 +1,14 @@
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
     @State private var viewModel = JournalViewModel()
     @State private var showEditor = false
     @State private var journalToEdit: Journal? = nil
+    // Reads saved journals from SwiftData (updates automatically)
+    @Query private var journals: [Journal]
+    // Used to insert / delete journals in the database
+    @Environment(\.modelContext) private var modelContext
     
     
     var body: some View {
@@ -19,12 +24,11 @@ struct MainView: View {
     HeaderButtons(sortOption: $viewModel.sortOption, onAdd: { showEditor = true })
                 }
                 
-    if viewModel.journals.isEmpty {
-        EmptyStateView()
+        if journals.isEmpty {        EmptyStateView()
         } else {
         JournalListView(
-        journals: viewModel.filteredJournals,
-        
+            
+journals:viewModel.filteredJournals(journals),
         
         swipedID: viewModel.swipedID,
         
@@ -52,7 +56,7 @@ if viewModel.journalToDelete != nil {
                 
         DeleteAlert(
     onCancel: { viewModel.cancelDelete() },
-    onDelete: { viewModel.confirmDelete() }
+    onDelete: { viewModel.confirmDelete(in: modelContext) }
                 )
             }
         }
@@ -60,7 +64,7 @@ if viewModel.journalToDelete != nil {
         .sheet(isPresented: $showEditor) {
             EditJournalView(
     onSave: { title, content in
-    viewModel.add(title: title, content: content)
+        viewModel.add(title: title, content: content, in: modelContext)
         showEditor = false
                 },
     onClose: { showEditor = false }
@@ -82,4 +86,6 @@ if viewModel.journalToDelete != nil {
 
 #Preview {
     MainView()
+        .modelContainer(for: Journal.self, inMemory: true)
 }
+
