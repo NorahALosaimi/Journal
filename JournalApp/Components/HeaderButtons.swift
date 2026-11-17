@@ -4,21 +4,28 @@
 //
 //  Created by Norah Alosaimi on 01/06/1448 AH.
 //
-
 import SwiftUI
 
 struct HeaderButtons: View {
-    var onFilter: () -> Void = {}
+    @Binding var sortOption: SortOption
     var onAdd: () -> Void = {}
-
+    
     var body: some View {
         HStack(spacing: Theme.Spacing.medium) {
-            Button(action: onFilter) {
-                Image(systemName: "line.3.horizontal.decrease")
+            
+            // Filter menu: opens two options
+    Menu {
+ Picker("Sort", selection: $sortOption) {
+ Text("Sort by Bookmark").tag(SortOption.bookmark)
+    Text("Sort by Entry Date").tag(SortOption.entryDate)
+                }
+            } label: {
+    Image(systemName: "line.3.horizontal.decrease")
             }
-
-            Button(action: onAdd) {
-                Image(systemName: "plus")
+            
+            // Add button
+    Button(action: onAdd) {
+        Image(systemName: "plus")
             }
         }
         .font(.system(size: 20))
@@ -31,7 +38,7 @@ struct HeaderButtons: View {
 }
 
 #Preview {
-    HeaderButtons()
+    HeaderButtons(sortOption: .constant(.entryDate))
         .padding()
         .background(Theme.Colors.backgroundPrimary)
 }
