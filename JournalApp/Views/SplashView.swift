@@ -11,11 +11,13 @@ struct SplashView: View {
     var body: some View {
         ZStack {
     LinearGradient(
-colors: [
-        Theme.Colors.backgroundPrimary,
-        Theme.Colors.surfaceCard
-    ],
-        startPoint: .top,
+// Background at the top, soft purple tint at the bottom
+        
+// (adapts automatically to light / dark mode)
+        colors: [
+            Theme.Colors.backgroundPrimary,
+            Theme.Colors.primaryAccent.opacity(0.25)
+        ],        startPoint: .top,
         endPoint: .bottom
             )
      .ignoresSafeArea()
